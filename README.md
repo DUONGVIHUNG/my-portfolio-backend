@@ -20,11 +20,22 @@ A RESTful API built with Spring Boot to serve my personal portfolio data.
 
 ---
 
-### 2025-08-25（日）
+### 2025-08-24（日）
 
 **Task: User情報取得用APIエンドポイントの実装**
 
 * テスト用APIの実装をコピーし、User情報取得用APIエンドポイントを実装
 * アノテーションが動かない問題を解決のため、`pom.xml`ファイルに`Lombok`バージョンを明確に指定した。
-* プロジェクトを除き、ユーザー情報のみ取得するのに、中間に`UserDto`クラス作成
+* プロジェクト情報を除き、ユーザー情報のみ取得するのに、中間に`UserDto`クラス作成
+* テストを実施、設計したJSONデータと同じようなフォーマットの返却が成功でした。
+
+---
+
+### 2025-08-26（火）
+
+**Task: Project情報取得用APIエンドポイントの実装**
+
+* Project情報取得用APIエンドポイントを実装
+* `ProjectDto`クラス実装
+* Projectの生データに`Lessonleanred`と`TechStack`フィールドがStringデータ型であり、リスト出力の設計と異なったので、データを加工するため、`ProjecService`クラスを追加で実装した。
 * テストを実施、設計したJSONデータと同じようなフォーマットの返却が成功でした。

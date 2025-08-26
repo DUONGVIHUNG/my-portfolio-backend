@@ -1,11 +1,16 @@
 package com.portfolio.portfolio_backend.Controller;
 
+import com.portfolio.portfolio_backend.DTO.ProjectDto;
 import com.portfolio.portfolio_backend.Entity.Project;
 import com.portfolio.portfolio_backend.Repository.ProjectRepository;
+import com.portfolio.portfolio_backend.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -13,10 +18,11 @@ import java.util.List;
 public class ProjectController {
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ProjectService projectService;
 
     @GetMapping("/project/{userId}")
-    public List<Project> getProjectFromUser(@PathVariable Long userId){
-        return projectRepository.findByUserId(userId);
+    public ResponseEntity<List<Optional<ProjectDto>>> getProjectFromUser(@PathVariable Long userId){
+
+        return ResponseEntity.ok(projectService.getProjectfromId(userId));
     }
 }
