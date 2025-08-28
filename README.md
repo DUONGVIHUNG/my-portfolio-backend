@@ -39,3 +39,12 @@ A RESTful API built with Spring Boot to serve my personal portfolio data.
 * `ProjectDto`クラス実装
 * Projectの生データに`Lessonleanred`と`TechStack`フィールドがStringデータ型であり、リスト出力の設計と異なったので、データを加工するため、`ProjecService`クラスを追加で実装した。
 * テストを実施、設計したJSONデータと同じようなフォーマットの返却が成功でした。
+
+### 2025-08-28（火）
+
+**Task: Fileダウンロード用APIエンドポイントの実装**
+
+* Fileダウンロード用APIエンドポイントを実装
+* ファイル処理のため`FileService`クラス実装（今後エクセルファイルも対応）
+* APIエンドポイントの`FileController`クラス実装
+* テストを実施、pdf崩れなくダウンロード成功
