@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -19,53 +20,47 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    private Optional<Project> projectOptional;
+//    private Optional<Project> projectOptional;
+//
+//    private List<Optional<ProjectDto>> projectDtos = new ArrayList<>();
+//
+//    private Optional<ProjectDto> projectDto;
+//
+//    private List<Project> projects = new ArrayList<>();
 
-    private List<Optional<ProjectDto>> projectDtos = new ArrayList<>();
+    public List<ProjectDto> getProjectfromId(Long id){
 
-    private Optional<ProjectDto> projectDto;
+        List<Project> projects = projectRepository.findByUserId(id);
 
-    private List<Project> projects = new ArrayList<>();
-
-    public List<Optional<ProjectDto>> getProjectfromId(Long id){
-
-        projects = projectRepository.findByUserId(id);
-
-
-        for (Project project: projects){
-            projectOptional = Optional.of(project);
-            projectDto = projectOptional.map(p->{
-                List<String> lesson = Arrays.stream(p.getLessonLearn().split(","))
-                        .map(String::trim)
-                        .toList();
-
-                List<String> techStack = Arrays.stream(p.getTechStack().split(","))
-                        .map(String::trim)
-                        .toList();
-
-                return new ProjectDto(
-                        p.getId(),
-                        p.getProjectName(),
-                        p.getStartDate(),
-                        p.getEndDate(),
-                        p.getDetail(),
-                        techStack,
-                        p.getProjectSize(),
-                        p.getMyRole(),
-                        lesson
-                );
-
-            });
-
-            projectDtos.add(projectDto);
-
-
-
-        }
-
-        return projectDtos;
+            return projects.stream()
+                            .map(this::convertToDto)
+                                    .toList();
 
 
     }
+
+    private ProjectDto convertToDto(Project project){
+        List<String> lesson = Arrays.stream(project.getLessonLearn().split(","))
+                .map(String::trim)
+                .toList();
+
+        List<String> techStack = Arrays.stream(project.getTechStack().split(","))
+                .map(String::trim)
+                .toList();
+
+        return new ProjectDto(
+                project.getId(),
+                project.getProjectName(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getDetail(),
+                techStack,
+                project.getProjectSize(),
+                project.getMyRole(),
+                lesson
+        );
+
+    }
+
 
 }
