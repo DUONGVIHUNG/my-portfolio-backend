@@ -37,6 +37,7 @@ public class ProjectDto {
     private String projectSize;
     private String projectRole;
     private List<String> lessonLearned;
+    private List<String> projectPhase;
 
 
 }

@@ -31,6 +31,9 @@ public class Project {
     @Column(name = "lesson_learn_")
     private String lessonLearn;
 
+    @Column(name = "project_phase")
+    private String projectPhase;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
