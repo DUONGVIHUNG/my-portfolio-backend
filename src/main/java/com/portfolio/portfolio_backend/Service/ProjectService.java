@@ -48,6 +48,10 @@ public class ProjectService {
                 .map(String::trim)
                 .toList();
 
+        List<String> projectPhase = Arrays.stream(project.getProjectPhase().split(","))
+                .map(String::trim)
+                .toList();
+
         return new ProjectDto(
                 project.getId(),
                 project.getProjectName(),
@@ -57,7 +61,8 @@ public class ProjectService {
                 techStack,
                 project.getProjectSize(),
                 project.getMyRole(),
-                lesson
+                lesson,
+                projectPhase
         );
 
     }
