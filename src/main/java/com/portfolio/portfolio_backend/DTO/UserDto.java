@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -33,4 +35,12 @@ public class UserDto {
     private String selfPr;
     private String cvUrl;
     private String githubUrl;
+    private Integer yearExp;
+    private Integer projectNums;
+    private Integer certNums;
+    private List<String> cert;
+    private List<String> frontEnd;
+    private List<String> backEnd;
+    private List<String> tool;
+    private List<String> learning;
 }

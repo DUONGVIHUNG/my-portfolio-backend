@@ -28,6 +28,22 @@ public class User {
     private String startDate;
     private String endDate;
 
+//    New field
+    @Column(name = "year_exp")
+    private Integer yearExp;
+    @Column(name = "certification")
+    private String cert;
+
+    @Column(name = "frontend_tech")
+    private String frontEnd;
+    @Column(name = "backend_tech")
+    private String backEnd;
+
+    @Column(name = "tool")
+    private String tool;
+    @Column(name = "learning")
+    private String learning;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Project> projects;
