@@ -28,7 +28,7 @@ public class Project {
     @Column(name = "project_size")
     private String projectSize;
 
-    @Column(name = "lesson_learn_")
+    @Column(name = "lesson_learn_", columnDefinition = "TEXT")
     private String lessonLearn;
 
     @Column(name = "project_phase")
