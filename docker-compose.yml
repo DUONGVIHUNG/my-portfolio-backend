@@ -1,0 +1,75 @@
+version: '3.8'
+
+# This is the main section where we define all the containers (services) our application needs.
+services:
+
+  ######################################################
+  # 1. The Application Service (Your Spring Boot App)  #
+  ######################################################
+  app:
+    # 'build: .' tells Docker Compose to look for a 'Dockerfile' in the current
+    # directory and build an image from it.
+    build: .
+
+    # Restarts the container automatically if it crashes.
+    # 'unless-stopped' is a good default for development.
+    restart: unless-stopped
+
+    # 'ports' maps ports from your host machine to the container in the format (HOST:CONTAINER).
+    # This makes your Spring Boot app accessible at http://localhost:8080 on your computer.
+    ports:
+      - "8080:8080"
+
+    # 'environment' sets the environment variables that will be available inside the container.
+    # Your Spring Boot application.properties file will use these placeholders.
+    environment:
+      # Spring Profile to activate (e.g., application-local.properties)
+      - SPRING_PROFILES_ACTIVE=local
+
+      # Database Connection Details
+      - DB_HOST=db        # The hostname 'db' matches the service name of our database below.
+      - DB_PORT=5432        # The INTERNAL port that PostgreSQL is listening on inside the Docker network.
+      - DB_NAME=portfolio_db
+      - DB_USER=postgres
+      - DB_PASSWORD=root
+
+    # 'depends_on' tells Docker to start the 'db' service before starting the 'app' service.
+    # This helps prevent your app from crashing if it starts before the database is ready.
+    depends_on:
+      - db
+
+  ######################################################
+  # 2. The Database Service (PostgreSQL)               #
+  ######################################################
+  db:
+    # 'image' tells Docker Compose to pull a pre-built image from Docker Hub.
+    # Using a specific version tag (e.g., '15-alpine') is better than using 'latest'.
+    image: postgres:15-alpine
+
+    # Always restart the database container unless it was manually stopped.
+    restart: unless-stopped
+
+    # This maps the container's internal port 5432 to port 5432 on your host machine.
+    # You will connect to this database from a GUI tool (like DBeaver) using localhost:5432.
+    # If port 5432 is already in use on your machine, change the first number (e.g., "5433:5432").
+    ports:
+      - "5433:5432"
+
+    # These environment variables are required by the official PostgreSQL image
+    # to initialize the database the very first time it starts with an empty volume.
+    environment:
+      - POSTGRES_DB=portfolio_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+
+    # 'volumes' are used to persist data. This line creates a link between a folder
+    # inside the container and a persistent storage area managed by Docker on your host machine.
+    # This ensures your database data is saved even if you stop and remove the container.
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+# This top-level 'volumes' key is where we declare our "named volume".
+# This tells Docker to create and manage a persistent storage area called 'pgdata'.
+# It's the modern, recommended way to handle persistent data in Docker.
+volumes:
+  pgdata:
