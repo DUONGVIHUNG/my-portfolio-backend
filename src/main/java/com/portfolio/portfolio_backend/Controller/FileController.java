@@ -32,6 +32,7 @@ public class FileController {
            }else if(fileNameToLowerCase.endsWith(".xls")){
                contentType= "application/vns.ms-excel";
            }
+            System.out.println(resource.getFilename());
            return ResponseEntity.ok()
                    .contentType(MediaType.parseMediaType(contentType))
                    .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename =\""+ resource.getFilename()+"\"")
